@@ -4,6 +4,7 @@ from rclpy.qos import QoSProfile
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
 from classification_msgs.msg import ClassificationResult
+from plugins.decision_maker import make_decision
 import torch
 from torchvision import transforms, models
 
@@ -45,14 +46,6 @@ def perform_classification(image):
     confidence = torch.nn.functional.softmax(output, dim=1)[0][predicted_class].item()
 
     return label, confidence
-
-def make_decision(label, confidence):
-    # Implement drone decision-making logic based on classification results
-    if confidence > 0.8:
-        print("TODO.")
-    else:
-        print("Low confidence. Unable to make a clear decision.")
-
 
 def callback(msg):
     bridge = CvBridge()
